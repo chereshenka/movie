@@ -92,11 +92,12 @@ margin-bottom: 35px;
 }
 .item__title{
   width: 198px;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 28px;
   align-self: center;
 }
 .item__birth{
+  margin-top: -5px;
   margin-bottom: 5px;
   color: var(--color-birth);
 }
@@ -128,11 +129,7 @@ margin-bottom: 35px;
   margin-bottom: 0px;
   width: 228px;
   height: 105px;
-  overflow-y: hidden;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
-.item__description{
-  max-height: 98px;
-  overflow: hidden;
-}
+/*417 2much, then 200 is ok*/

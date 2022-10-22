@@ -1,5 +1,7 @@
 import { Component } from "react";
 import { Input, Menu, Card, List, Pagination, Rate } from "antd";
+import format from "date-fns/format";
+import parseISO from "date-fns/parseISO";
 
 import "antd/dist/antd.min.css";
 
@@ -37,9 +39,20 @@ export default class App extends Component {
     });
   };
 
+  cutDescription(text) {
+    console.log(text);
+    let preview = text.slice(0, 190);
+    if (preview.length === 190) {
+      let previewArr = preview.split(" ");
+      previewArr[previewArr.length - 1] = "...";
+      return previewArr.join(" ");
+    } else {
+      return preview;
+    }
+  }
+
   render() {
     const { data } = this.state;
-    console.log(data);
     return (
       <>
         <Menu mode="horizontal">
@@ -77,25 +90,33 @@ export default class App extends Component {
                   </span>
                 </div>
 
-                <p className="item__birth">March 5, 2020</p>
+                <p className="item__birth">
+                  {format(parseISO(item.release_date), "MMMM d, y")}
+                </p>
                 <div className="item__category-list">
                   <button className="item__category-item">Action</button>
                   <button className="item__category-item">Drama</button>
                 </div>
                 <div className="item__overview">
-                  <p className="item__description">{item.overview}</p>
+                  <p className="item__description">
+                    {this.cutDescription(item.overview)}
+                  </p>
                 </div>
                 <Rate
                   count={10}
                   allowHalf
                   defaultValue={item.vote_average}
-                  style={{ marginBottom: 5, position: "absolute", bottom: 5 }}
+                  style={{ marginBottom: 5, position: "absolute", bottom: 2 }}
                 />
               </Card>
             </List.Item>
           )}
         />
-        <Pagination defaultCurrent={1} total={50} />
+        <Pagination
+          defaultCurrent={1}
+          total={50}
+          style={{ marginBottom: 20 }}
+        />
       </>
     );
   }
