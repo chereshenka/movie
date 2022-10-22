@@ -11,33 +11,35 @@ import "antd/dist/antd.min.css";
 export default class App extends Component {
   constructor() {
     super();
-    this.items = [
-      { label: "Search", key: "search" },
-      { label: "Rated", key: "rated" },
-    ];
-    this.data = [
-      {
-        title: "Title 1",
-      },
-      {
-        title: "Title 2",
-      },
-      {
-        title: "Title 3",
-      },
-      {
-        title: "Title 4",
-      },
-      {
-        title: "Title 5",
-      },
-      {
-        title: "Title 5",
-      },
-    ];
+    this.getMovies();
   }
+  state = {
+    data: [],
+  };
+
+  getMovies = async function () {
+    // const data = input.value;
+    let response = await fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=544f8f911707c9ed5070d258fb62dbb5&language=en-US&page=1&query=return`
+    );
+    if (response.ok) {
+      let result = await response.json();
+      this.setData(result.results);
+    } else {
+      console.log(`couldnt get data`);
+    }
+    //  renderAutocomplete(res, data);
+  };
+
+  setData = (result) => {
+    this.setState(() => {
+      return { data: result };
+    });
+  };
 
   render() {
+    //  this.getMovies();
+    const { data } = this.state;
     return (
       <>
         <Menu mode="horizontal">
@@ -47,13 +49,12 @@ export default class App extends Component {
         <Input placeholder="Type to search..." />
         <List
           grid={{ gutter: 0, column: 2, lg: 1010 }}
-          dataSource={this.data}
+          dataSource={data}
           renderItem={(item) => (
-            <List.Item>
+            <List.Item key={item.title}>
               <Card
                 style={{
                   width: 454,
-                  height: 281,
                   display: "flex",
                   flexDirection: "row",
                   border: "none",
@@ -61,15 +62,17 @@ export default class App extends Component {
                 }}
                 cover={
                   <img
-                    style={{ height: 281 }}
-                    alt="example"
-                    src="https://s3.amazonaws.com/static.rogerebert.com/uploads/movie/movie_poster/the-way-back-2020/large_way-back-poster.jpg"
+                    style={{ height: 281, width: 183 }}
+                    alt={item.title}
+                    src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
                   />
                 }
               >
                 <div className="item__header">
-                  <h3 className="item__title">The way back</h3>
-                  <span className="item__rate">6.6</span>
+                  <h3 className="item__title">{item.title}</h3>
+                  <span className="item__rate">
+                    {item.popularity.toFixed(1)}
+                  </span>
                 </div>
 
                 <p className="item__birth">March 5, 2020</p>
@@ -83,7 +86,12 @@ export default class App extends Component {
                   soul and salvation by becoming the coach of a disparate
                   ethnically mixed high ...
                 </p>
-                <Rate count={10} allowHalf defaultValue={2.5} />
+                <Rate
+                  count={10}
+                  allowHalf
+                  defaultValue={item.vote_average}
+                  style={{ marginBottom: 5 }}
+                />
               </Card>
             </List.Item>
           )}
