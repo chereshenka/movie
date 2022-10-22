@@ -1,9 +1,11 @@
 import { Component } from "react";
-import { Input, Menu, Card, List, Pagination, Rate } from "antd";
+import { Alert, Input, Menu, Card, List, Pagination, Rate, Spin } from "antd";
 import format from "date-fns/format";
 import parseISO from "date-fns/parseISO";
 
+import { LoadingOutlined } from "@ant-design/icons";
 import "antd/dist/antd.min.css";
+import SwapiService from "../../services/swapi-service";
 
 // import Menu from '../menu';
 // import ListItems from '../list-items';
@@ -11,36 +13,35 @@ import "antd/dist/antd.min.css";
 // import Pagination from '../pagination';
 
 export default class App extends Component {
-  constructor() {
-    super();
-    this.getMovies();
-  }
+  swapiService = new SwapiService();
   state = {
     data: [],
+    loading: true,
+    error: false,
   };
 
-  getMovies = async function () {
-    // const data = input.value;
-    let response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=544f8f911707c9ed5070d258fb62dbb5&language=en-US&page=1&query=return`
-    );
-    if (response.ok) {
-      let result = await response.json();
-      this.setData(result.results);
-    } else {
-      console.log(`couldnt get data`);
-    }
-    //  renderAutocomplete(res, data);
-  };
+  constructor() {
+    super();
+    this.setData();
+  }
 
-  setData = (result) => {
-    this.setState(() => {
-      return { data: result };
-    });
-  };
+  setData() {
+    this.swapiService
+      .getMovies()
+      .then((res) => {
+        this.setState({
+          data: res,
+          loading: false,
+        });
+      })
+      .catch((err) => {
+        this.setState({
+          error: true,
+        });
+      });
+  }
 
   cutDescription(text) {
-    console.log(text);
     let preview = text.slice(0, 190);
     if (preview.length === 190) {
       let previewArr = preview.split(" ");
@@ -53,6 +54,25 @@ export default class App extends Component {
 
   render() {
     const { data } = this.state;
+
+    const antIcon = (
+      <LoadingOutlined
+        style={{
+          fontSize: 24,
+        }}
+        spin
+      />
+    );
+    const loading = () => <Spin indicator={antIcon} />;
+    const error = () => (
+      <Alert
+        message="Error"
+        description="This is an error message about copywriting."
+        type="error"
+        showIcon
+      />
+    );
+
     return (
       <>
         <Menu mode="horizontal">
