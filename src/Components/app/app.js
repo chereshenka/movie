@@ -38,8 +38,8 @@ export default class App extends Component {
   };
 
   render() {
-    //  this.getMovies();
     const { data } = this.state;
+    console.log(data);
     return (
       <>
         <Menu mode="horizontal">
@@ -48,17 +48,19 @@ export default class App extends Component {
         </Menu>
         <Input placeholder="Type to search..." />
         <List
-          grid={{ gutter: 0, column: 2, lg: 1010 }}
+          grid={{ gutter: 30, column: 2, lg: 1010 }}
           dataSource={data}
           renderItem={(item) => (
             <List.Item key={item.title}>
               <Card
                 style={{
                   width: 454,
+                  height: 281,
                   display: "flex",
                   flexDirection: "row",
                   border: "none",
                   boxShadow: "4px 4px 8px -5px rgba(34, 60, 80, 0.2)",
+                  margin: "0 auto",
                 }}
                 cover={
                   <img
@@ -80,17 +82,14 @@ export default class App extends Component {
                   <button className="item__category-item">Action</button>
                   <button className="item__category-item">Drama</button>
                 </div>
-                <p className="item__description">
-                  A former basketball all-star, who has lost his wife and family
-                  foundation in a struggle with addiction attempts to regain his
-                  soul and salvation by becoming the coach of a disparate
-                  ethnically mixed high ...
-                </p>
+                <div className="item__overview">
+                  <p className="item__description">{item.overview}</p>
+                </div>
                 <Rate
                   count={10}
                   allowHalf
                   defaultValue={item.vote_average}
-                  style={{ marginBottom: 5 }}
+                  style={{ marginBottom: 5, position: "absolute", bottom: 5 }}
                 />
               </Card>
             </List.Item>
