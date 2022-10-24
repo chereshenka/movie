@@ -2,8 +2,8 @@ import { Alert } from "antd";
 
 const ErrorIndicator = () => (
   <Alert
-    message="Error"
-    description="Something went wrong, try later."
+    description="Can't find anything with your request, try another one"
+    message="Request Failed"
     type="error"
     showIcon
   />

@@ -31,5 +31,4 @@ export default class SearchInput extends Component {
       />
     );
   }
-  smoke;
 }

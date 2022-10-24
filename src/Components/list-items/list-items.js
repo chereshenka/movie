@@ -9,6 +9,7 @@ import Spinner from "../spinner";
 export default class ListItems extends Component {
   swapiService = new SwapiService();
   state = {
+    fullData: [],
     data: [],
     loading: true,
     error: false,
@@ -33,7 +34,8 @@ export default class ListItems extends Component {
       .getMovies(userQuery)
       .then((res) => {
         this.setState({
-          data: res,
+          fullData: res,
+          data: res.results,
           loading: false,
         });
       })
@@ -44,15 +46,14 @@ export default class ListItems extends Component {
         });
       });
   }
-
-  //   setData = (text) => {};
+  changePageNumber = (e) => {
+    this.props.changePage(e);
+  };
   render() {
-    const { data, loading, error } = this.state;
-    if (!data.length) {
-      return <Spinner />;
-    }
+    const { data, loading, error, fullData } = this.state;
+
     const spinner = loading ? <Spinner /> : null;
-    const errorInformation = error ? <ErrorIndicator /> : null;
+    const errorInformation = !data.length || error ? <ErrorIndicator /> : null;
     const contentBlock = !(loading || errorInformation) ? (
       <>
         <List
@@ -62,8 +63,12 @@ export default class ListItems extends Component {
         />
         <Pagination
           defaultCurrent={1}
-          total={50}
+          current={this.props.userQuery.page}
+          onChange={this.changePageNumber}
+          total={fullData.total_pages}
           style={{ marginBottom: 20 }}
+          hideOnSinglePage
+          showSizeChanger={false}
         />
       </>
     ) : null;

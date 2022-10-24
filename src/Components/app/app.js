@@ -8,6 +8,8 @@ import SearchInput from "../search";
 
 export default class App extends Component {
   state = {
+    language: "en-Us",
+    page: 1,
     query: "return",
   };
 
@@ -15,6 +17,13 @@ export default class App extends Component {
     console.log("got new query", `${query}`);
     this.setState({
       query,
+      page: 1,
+    });
+  };
+  changePage = (page) => {
+    console.log("change page", `${page}`);
+    this.setState({
+      page,
     });
   };
 
@@ -25,7 +34,7 @@ export default class App extends Component {
           <MenuTabs />
           <SearchInput changeQuery={this.onQueryChange} />
           <div className="content-box">
-            <ListItems userQuery={this.state.query} />
+            <ListItems userQuery={this.state} changePage={this.changePage} />
           </div>
         </Online>
         <Offline>
