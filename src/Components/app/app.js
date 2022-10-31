@@ -1,5 +1,7 @@
 import { Component } from "react";
 import { Offline, Online } from "react-detect-offline";
+import SwapiService from "../../services/swapi-service";
+import { SwapiServiceProvider } from "../swapi-service-context";
 
 import "antd/dist/antd.min.css";
 import MenuTabs from "../menu";
@@ -11,13 +13,31 @@ export default class App extends Component {
     language: "en-Us",
     page: 1,
     query: "return",
+    tab: "search",
+    genresList: [],
   };
+  swapiService = new SwapiService();
+
+  componentDidMount() {
+    this.swapiService
+      .getGenreList()
+      .then((genreListData) =>
+        this.setState({ genresList: genreListData.genres })
+      );
+  }
 
   onQueryChange = (query) => {
     console.log("got new query", `${query}`);
     this.setState({
       query,
       page: 1,
+    });
+  };
+
+  tabChange = (tab) => {
+    console.log("tab changed", tab);
+    this.setState({
+      tab,
     });
   };
   changePage = (page) => {
@@ -28,14 +48,20 @@ export default class App extends Component {
   };
 
   render() {
+    console.log(this.state, "app state");
     return (
       <>
         <Online>
-          <MenuTabs />
-          <SearchInput changeQuery={this.onQueryChange} />
-          <div className="content-box">
-            <ListItems userQuery={this.state} changePage={this.changePage} />
-          </div>
+          <SwapiServiceProvider value={this.state}>
+            <MenuTabs onTabChange={this.tabChange} />
+            <SearchInput
+              changeQuery={this.onQueryChange}
+              hidePanel={this.state.tab}
+            />
+            <div className="content-box">
+              <ListItems userQuery={this.state} changePage={this.changePage} />
+            </div>
+          </SwapiServiceProvider>
         </Online>
         <Offline>
           <h1>Check Your Connection, Please!</h1>

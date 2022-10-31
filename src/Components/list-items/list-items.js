@@ -16,15 +16,26 @@ export default class ListItems extends Component {
   };
 
   componentDidMount() {
-    this.updateListData();
+    this.updateListData(this.props.userQuery.tab);
+    // this.swapiService.getSessionToken().then((res) => {
+    //   console.log(res, "session id");
+    // });
   }
   componentDidUpdate(prevProps) {
     if (this.props.userQuery !== prevProps.userQuery) {
-      this.updateListData();
+      this.updateListData(this.props.userQuery.tab);
     }
   }
-
-  updateListData() {
+  updateListData(tab) {
+    console.log("tab changed", tab);
+    if (tab === "search") {
+      this.searchList();
+    }
+    if (tab === "rated") {
+      this.rateList();
+    }
+  }
+  searchList() {
     const { userQuery } = this.props;
     if (!userQuery) {
       console.log(userQuery, "wrong block");
@@ -46,15 +57,41 @@ export default class ListItems extends Component {
         });
       });
   }
+
+  rateList() {
+    this.swapiService
+      .getRatedMovies()
+      .then((res) => {
+        console.log(res, "rate list");
+        this.setState({
+          fullData: res,
+          data: res.results,
+          loading: false,
+        });
+      })
+      .catch((err) => {
+        this.setState({
+          loading: false,
+          error: true,
+        });
+      });
+  }
+
   changePageNumber = (e) => {
     this.props.changePage(e);
   };
   render() {
     const { data, loading, error, fullData } = this.state;
 
-    const spinner = loading ? <Spinner /> : null;
-    const errorInformation = !data.length || error ? <ErrorIndicator /> : null;
-    const contentBlock = !(loading || errorInformation) ? (
+    const spinner = loading && !error ? <Spinner /> : null;
+    const errorInformation =
+      (!data.length || error) && !loading ? (
+        <ErrorIndicator
+          description="Request Failed"
+          message="Can't find anything with your request, try another one"
+        />
+      ) : null;
+    const contentBlock = !(loading && errorInformation) ? (
       <>
         <List
           grid={{ gutter: 30, column: 2, lg: 1010 }}
