@@ -45,6 +45,10 @@ export default class Item extends Component {
     const date = item.release_date
       ? format(parseISO(item.release_date), "MMMM d, y")
       : "no date";
+
+    const poster = item.poster_path
+      ? `https://image.tmdb.org/t/p/original${item.poster_path}`
+      : `https://upload.wikimedia.org/wikipedia/commons/a/a1/Out_Of_Poster.jpg`;
     return (
       <Card
         key={item.title}
@@ -61,7 +65,7 @@ export default class Item extends Component {
           <img
             style={{ height: 281, width: 183 }}
             alt={item.title}
-            src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+            src={poster}
           />
         }
       >
