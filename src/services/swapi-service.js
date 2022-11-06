@@ -34,12 +34,12 @@ class SwapiService {
       `https://api.themoviedb.org/3/movie/${id}/rating?api_key=${this._apiKey}&guest_session_id=${this.guest_session_id}`,
       {
         headers: {
-          "Content-Type": "application/json;charset=utf-8",
+          "Content-Type": "application/json;charset=utf-8"
         },
         method: "POST",
         body: JSON.stringify({
-          value: value,
-        }),
+          value: value
+        })
       }
     );
     if (!res.ok) {

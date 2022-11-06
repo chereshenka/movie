@@ -5,18 +5,18 @@ import debounce from "lodash.debounce";
 
 export default class SearchInput extends Component {
   state = {
-    value: null,
+    value: null
   };
 
   debouncedGetResponse = debounce((val) => this.props.changeQuery(val), 1000, {
     leading: true,
-    trailing: true,
+    trailing: true
   });
 
   onChange = (e) => {
     const search = e.target.value;
     this.setState({
-      value: search,
+      value: search
     });
     this.debouncedGetResponse(search);
   };

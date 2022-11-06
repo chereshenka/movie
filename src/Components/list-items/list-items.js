@@ -12,7 +12,7 @@ export default class ListItems extends Component {
     fullData: [],
     data: [],
     loading: true,
-    error: false,
+    error: false
   };
 
   componentDidMount() {
@@ -42,13 +42,13 @@ export default class ListItems extends Component {
         this.setState({
           fullData: res,
           data: res.results,
-          loading: false,
+          loading: false
         });
       })
       .catch((err) => {
         this.setState({
           loading: false,
-          error: true,
+          error: true
         });
       });
   }
@@ -60,13 +60,13 @@ export default class ListItems extends Component {
         this.setState({
           fullData: res,
           data: res.results,
-          loading: false,
+          loading: false
         });
       })
       .catch((err) => {
         this.setState({
           loading: false,
-          error: true,
+          error: true
         });
       });
   }
