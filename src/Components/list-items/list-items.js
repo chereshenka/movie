@@ -17,9 +17,6 @@ export default class ListItems extends Component {
 
   componentDidMount() {
     this.updateListData(this.props.userQuery.tab);
-    // this.swapiService.getSessionToken().then((res) => {
-    //   console.log(res, "session id");
-    // });
   }
   componentDidUpdate(prevProps) {
     if (this.props.userQuery !== prevProps.userQuery) {
@@ -27,7 +24,6 @@ export default class ListItems extends Component {
     }
   }
   updateListData(tab) {
-    console.log("tab changed", tab);
     if (tab === "search") {
       this.searchList();
     }
@@ -38,7 +34,6 @@ export default class ListItems extends Component {
   searchList() {
     const { userQuery } = this.props;
     if (!userQuery) {
-      console.log(userQuery, "wrong block");
       return;
     }
     this.swapiService
@@ -62,7 +57,6 @@ export default class ListItems extends Component {
     this.swapiService
       .getRatedMovies()
       .then((res) => {
-        console.log(res, "rate list");
         this.setState({
           fullData: res,
           data: res.results,

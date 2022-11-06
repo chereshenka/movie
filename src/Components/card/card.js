@@ -23,7 +23,6 @@ export default class Item extends Component {
   }
 
   userFilmRating = (value, id) => {
-    console.log(value, id, "user rated film");
     this.setState({
       value,
     });
@@ -42,6 +41,10 @@ export default class Item extends Component {
         : item.vote_average < 7
         ? "#E9D100"
         : "#66E900";
+
+    const date = item.release_date
+      ? format(parseISO(item.release_date), "MMMM d, y")
+      : "no date";
     return (
       <Card
         key={item.title}
@@ -69,9 +72,7 @@ export default class Item extends Component {
           </span>
         </div>
 
-        <p className="item__birth">
-          {format(parseISO(item.release_date), "MMMM d, y")}
-        </p>
+        <p className="item__birth">{date}</p>
         <CategoryList genres={item.genre_ids} />
         <div className="item__overview">
           <p className="item__description">

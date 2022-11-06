@@ -18,7 +18,6 @@ class SwapiService {
 
   async getMovies(request) {
     const res = await this.getResource(request);
-    console.log(res, "get movies");
     return res;
   }
 
@@ -27,7 +26,6 @@ class SwapiService {
       `${this._apiSessionTokenURL}?api_key=${this._apiKey}`
     );
     let json = await res.json();
-    console.log(json);
     return json.guest_session_id;
   }
 
@@ -45,33 +43,29 @@ class SwapiService {
       }
     );
     if (!res.ok) {
-      console.log(`can't set rate to ${id} with ${value} rate`);
-      throw new Error("fail rate movie");
+      throw new Error(`can't set rate to ${id} with ${value} rate`);
     }
-    console.log(res);
   }
 
   async getRatedMovies() {
     const res = await fetch(
       `https://api.themoviedb.org/3/guest_session/${this.guest_session_id}/rated/movies?api_key=${this._apiKey}&language=en-US&sort_by=created_at.asc`
     );
-    if (res.ok) {
-      console.log("got full rated movies");
+    if (!res.ok) {
+      throw new Error(`can't get rated list`);
     }
     let json = await res.json();
     return json;
   }
 
   async getGenreList() {
-    console.log(this._apiKey, "key");
     const res = await fetch(
       `https://api.themoviedb.org/3/genre/movie/list?api_key=${this._apiKey}&language=en-US`
     );
-    if (res.ok) {
-      console.log("genres generated");
+    if (!res.ok) {
+      throw new Error(`genres are not found`);
     }
     let json = await res.json();
-    console.log(json);
     return json;
   }
 }

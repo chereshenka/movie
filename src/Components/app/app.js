@@ -27,7 +27,6 @@ export default class App extends Component {
   }
 
   onQueryChange = (query) => {
-    console.log("got new query", `${query}`);
     this.setState({
       query,
       page: 1,
@@ -35,20 +34,17 @@ export default class App extends Component {
   };
 
   tabChange = (tab) => {
-    console.log("tab changed", tab);
     this.setState({
       tab,
     });
   };
   changePage = (page) => {
-    console.log("change page", `${page}`);
     this.setState({
       page,
     });
   };
 
   render() {
-    console.log(this.state, "app state");
     return (
       <>
         <Online>

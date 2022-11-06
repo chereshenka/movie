@@ -13,11 +13,8 @@ class SwapiService {
 
   async getMovies(request) {
     const res = await this.getResource(request);
-    console.log(res);
     return res;
   }
 }
 
 export default SwapiService;
-
-// `${this._apiBase}?api_key=${this._apiKey}&language=en-US&page=1&query=${query}`

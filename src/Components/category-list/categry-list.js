@@ -7,8 +7,6 @@ export default class CategoryList extends Component {
     return (
       <SwapiServiceConsumer>
         {({ genresList }) => {
-          //   console.log(genresList, "gList");
-          //   console.log(genres, "gProps");
           return (
             <div className="item__category-list">
               {genresList.map(({ id, name }) => {
