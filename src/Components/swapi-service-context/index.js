@@ -3,4 +3,4 @@ import {
   SwapiServiceConsumer
 } from "./swapi-service-context";
 
-export { SwapiServiceProvider, SwapiServiceConsumer };
+export default { SwapiServiceProvider, SwapiServiceConsumer };

@@ -1,8 +1,8 @@
 import { Component } from "react";
 import { format, parseISO } from "date-fns";
 import { Card, Rate } from "antd";
-import CategoryList from "../category-list";
 
+import CategoryList from "../category-list";
 import SwapiService from "../../services/swapi-service";
 
 export default class Item extends Component {
@@ -48,7 +48,7 @@ export default class Item extends Component {
 
     const poster = item.poster_path
       ? `https://image.tmdb.org/t/p/original${item.poster_path}`
-      : `https://upload.wikimedia.org/wikipedia/commons/a/a1/Out_Of_Poster.jpg`;
+      : "https://upload.wikimedia.org/wikipedia/commons/a/a1/Out_Of_Poster.jpg";
     return (
       <Card
         key={item.title}

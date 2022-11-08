@@ -1,5 +1,6 @@
-import { SwapiServiceConsumer } from "../swapi-service-context";
 import { Component } from "react";
+
+import { SwapiServiceConsumer } from "../swapi-service-context/swapi-service-context";
 
 export default class CategoryList extends Component {
   render() {

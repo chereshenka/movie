@@ -1,8 +1,8 @@
 import { Component } from "react";
-import Item from "../card";
 import { List, Pagination } from "antd";
-import SwapiService from "../../services/swapi-service";
 
+import Item from "../card";
+import SwapiService from "../../services/swapi-service";
 import ErrorIndicator from "../error-indicator";
 import Spinner from "../spinner";
 
@@ -45,7 +45,7 @@ export default class ListItems extends Component {
           loading: false
         });
       })
-      .catch((err) => {
+      .catch(() => {
         this.setState({
           loading: false,
           error: true
@@ -63,7 +63,7 @@ export default class ListItems extends Component {
           loading: false
         });
       })
-      .catch((err) => {
+      .catch(() => {
         this.setState({
           loading: false,
           error: true

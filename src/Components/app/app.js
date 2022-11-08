@@ -1,12 +1,12 @@
 import { Component } from "react";
 import { Offline, Online } from "react-detect-offline";
-import SwapiService from "../../services/swapi-service";
-import { SwapiServiceProvider } from "../swapi-service-context";
 
+import SwapiService from "../../services/swapi-service";
 import "antd/dist/antd.min.css";
 import MenuTabs from "../menu";
 import ListItems from "../list-items";
 import SearchInput from "../search";
+import { SwapiServiceProvider } from "../swapi-service-context/swapi-service-context";
 
 export default class App extends Component {
   state = {

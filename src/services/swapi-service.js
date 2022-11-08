@@ -52,7 +52,7 @@ class SwapiService {
       `https://api.themoviedb.org/3/guest_session/${this.guest_session_id}/rated/movies?api_key=${this._apiKey}&language=en-US&sort_by=created_at.asc`
     );
     if (!res.ok) {
-      throw new Error(`can't get rated list`);
+      throw new Error("can't get rated list");
     }
     let json = await res.json();
     return json;
@@ -63,7 +63,7 @@ class SwapiService {
       `https://api.themoviedb.org/3/genre/movie/list?api_key=${this._apiKey}&language=en-US`
     );
     if (!res.ok) {
-      throw new Error(`genres are not found`);
+      throw new Error("genres are not found");
     }
     let json = await res.json();
     return json;
@@ -71,5 +71,3 @@ class SwapiService {
 }
 
 export default SwapiService;
-
-// `${this._apiBase}?api_key=${this._apiKey}&language=en-US&page=1&query=${query}`
