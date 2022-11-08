@@ -14,7 +14,7 @@ export default class App extends Component {
     page: 1,
     query: "return",
     tab: "search",
-    genresList: []
+    genresList: [],
   };
   swapiService = new SwapiService();
 
@@ -22,25 +22,25 @@ export default class App extends Component {
     this.swapiService
       .getGenreList()
       .then((genreListData) =>
-        this.setState({ genresList: genreListData.genres })
+        this.setState({ genresList: genreListData.genres }),
       );
   }
 
   onQueryChange = (query) => {
     this.setState({
       query,
-      page: 1
+      page: 1,
     });
   };
 
   tabChange = (tab) => {
     this.setState({
-      tab
+      tab,
     });
   };
   changePage = (page) => {
     this.setState({
-      page
+      page,
     });
   };
 

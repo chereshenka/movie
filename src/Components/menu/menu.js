@@ -8,7 +8,7 @@ export default class MenuTabs extends Component {
 
   items = [
     { label: "Search", key: "search" },
-    { label: "Rated", key: "rated" }
+    { label: "Rated", key: "rated" },
   ];
 
   render() {

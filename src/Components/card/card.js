@@ -8,7 +8,7 @@ import SwapiService from "../../services/swapi-service";
 export default class Item extends Component {
   swapiService = new SwapiService();
   state = {
-    value: null
+    value: null,
   };
 
   cutDescription(text) {
@@ -24,7 +24,7 @@ export default class Item extends Component {
 
   userFilmRating = (value, id) => {
     this.setState({
-      value
+      value,
     });
     localStorage.setItem(id, value);
     this.swapiService.rateMovie(value, id);
@@ -59,7 +59,7 @@ export default class Item extends Component {
           flexDirection: "row",
           border: "none",
           boxShadow: "4px 4px 8px -5px rgba(34, 60, 80, 0.2)",
-          margin: "0 auto 35px"
+          margin: "0 auto 35px",
         }}
         cover={
           <img

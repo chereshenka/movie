@@ -8,7 +8,7 @@ class SwapiService {
 
   getResource = async (obj) => {
     const res = await fetch(
-      `${this._apiBase}?api_key=${this._apiKey}&language=${obj.language}&page=${obj.page}&query=${obj.query}`
+      `${this._apiBase}?api_key=${this._apiKey}&language=${obj.language}&page=${obj.page}&query=${obj.query}`,
     );
     if (!res.ok) {
       throw new Error(`couldnt fetch, receive ${res.status}`);
@@ -23,7 +23,7 @@ class SwapiService {
 
   async getSessionToken() {
     const res = await fetch(
-      `${this._apiSessionTokenURL}?api_key=${this._apiKey}`
+      `${this._apiSessionTokenURL}?api_key=${this._apiKey}`,
     );
     let json = await res.json();
     return json.guest_session_id;
@@ -34,13 +34,13 @@ class SwapiService {
       `https://api.themoviedb.org/3/movie/${id}/rating?api_key=${this._apiKey}&guest_session_id=${this.guest_session_id}`,
       {
         headers: {
-          "Content-Type": "application/json;charset=utf-8"
+          "Content-Type": "application/json;charset=utf-8",
         },
         method: "POST",
         body: JSON.stringify({
-          value: value
-        })
-      }
+          value: value,
+        }),
+      },
     );
     if (!res.ok) {
       throw new Error(`can't set rate to ${id} with ${value} rate`);
@@ -49,7 +49,7 @@ class SwapiService {
 
   async getRatedMovies() {
     const res = await fetch(
-      `https://api.themoviedb.org/3/guest_session/${this.guest_session_id}/rated/movies?api_key=${this._apiKey}&language=en-US&sort_by=created_at.asc`
+      `https://api.themoviedb.org/3/guest_session/${this.guest_session_id}/rated/movies?api_key=${this._apiKey}&language=en-US&sort_by=created_at.asc`,
     );
     if (!res.ok) {
       throw new Error("can't get rated list");
@@ -60,7 +60,7 @@ class SwapiService {
 
   async getGenreList() {
     const res = await fetch(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=${this._apiKey}&language=en-US`
+      `https://api.themoviedb.org/3/genre/movie/list?api_key=${this._apiKey}&language=en-US`,
     );
     if (!res.ok) {
       throw new Error("genres are not found");
