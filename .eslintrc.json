@@ -24,7 +24,7 @@
     "indent": "off",
     "prettier/prettier": ["error",{
       "endOfLine":"auto",
-      "trailingComma":"none"
+      "trailingComma":"es2021"
     }],
     "linebreak-style": [0, "unix"],
     "quotes": ["error", "double"],
