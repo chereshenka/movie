@@ -24,6 +24,7 @@ export default class App extends Component {
       .then((genreListData) =>
         this.setState({ genresList: genreListData.genres }),
       );
+    this.swapiService.getSessionToken();
   }
 
   onQueryChange = (query) => {

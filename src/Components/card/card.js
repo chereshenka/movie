@@ -50,25 +50,7 @@ export default class Item extends Component {
       ? `https://image.tmdb.org/t/p/original${item.poster_path}`
       : "https://upload.wikimedia.org/wikipedia/commons/a/a1/Out_Of_Poster.jpg";
     return (
-      <Card
-        key={item.title}
-        style={{
-          width: 454,
-          height: 281,
-          display: "flex",
-          flexDirection: "row",
-          border: "none",
-          boxShadow: "4px 4px 8px -5px rgba(34, 60, 80, 0.2)",
-          margin: "0 auto 35px",
-        }}
-        cover={
-          <img
-            style={{ height: 281, width: 183 }}
-            alt={item.title}
-            src={poster}
-          />
-        }
-      >
+      <Card key={item.title} cover={<img alt={item.title} src={poster} />}>
         <div className="item__header">
           <h3 className="item__title">{item.title}</h3>
           <span className="item__rate" style={{ borderColor: circleColor }}>
@@ -90,7 +72,6 @@ export default class Item extends Component {
           allowClear
           value={rating}
           defaultValue={0}
-          style={{ marginBottom: 5, position: "absolute", bottom: 2 }}
         />
       </Card>
     );

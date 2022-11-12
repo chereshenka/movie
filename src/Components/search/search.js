@@ -8,7 +8,7 @@ export default class SearchInput extends Component {
   };
 
   debouncedGetResponse = debounce((val) => this.props.changeQuery(val), 1000, {
-    leading: true,
+    leading: false,
     trailing: true,
   });
 

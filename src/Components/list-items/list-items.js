@@ -24,6 +24,9 @@ export default class ListItems extends Component {
     }
   }
   updateListData(tab) {
+    this.setState({
+      loading: true,
+    });
     if (tab === "search") {
       this.searchList();
     }
@@ -43,6 +46,7 @@ export default class ListItems extends Component {
           fullData: res,
           data: res.results,
           loading: false,
+          error: false,
         });
       })
       .catch(() => {
@@ -54,13 +58,15 @@ export default class ListItems extends Component {
   }
 
   rateList() {
+    const { userQuery } = this.props;
     this.swapiService
-      .getRatedMovies()
+      .getRatedMovies(userQuery.page)
       .then((res) => {
         this.setState({
           fullData: res,
           data: res.results,
           loading: false,
+          error: false,
         });
       })
       .catch(() => {
@@ -73,6 +79,7 @@ export default class ListItems extends Component {
 
   changePageNumber = (e) => {
     this.props.changePage(e);
+    this.rateList(e);
   };
   render() {
     const { data, loading, error, fullData } = this.state;
@@ -94,10 +101,10 @@ export default class ListItems extends Component {
         />
         <Pagination
           defaultCurrent={1}
+          pageSize={20}
           current={this.props.userQuery.page}
           onChange={this.changePageNumber}
-          total={fullData.total_pages}
-          style={{ marginBottom: 20 }}
+          total={fullData.total_results}
           hideOnSinglePage
           showSizeChanger={false}
         />

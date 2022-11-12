@@ -42,6 +42,15 @@ margin-bottom: 35px;
 .ant-card-meta-title{
   font-size: 20px;
 }
+.ant-card{
+  width: 454px;
+  height: 281px;
+  display: flex;
+  flex-direction: row;
+  border: none;
+  box-shadow: 4px 4px 8px -5px rgba(34, 60, 80, 0.2);
+  margin: 0 auto 35px;
+}
 .ant-card-body{
   padding: 0;
   padding-left: 20px;
@@ -49,14 +58,20 @@ margin-bottom: 35px;
 .ant-card-cover{
   display: flex;
   align-items: center;
+  height: 281;
+   width: 183;
 }
 
 .ant-rate{
   font-size: 16px;
+  margin-bottom: 5px;
+  position: absolute; 
+  bottom: 2px;
 }
 
 .ant-pagination{
   margin: 0 auto;
+  margin-bottom:20px;
 }
 .ant-pagination-item-active{
   background-color: #1890ff;
