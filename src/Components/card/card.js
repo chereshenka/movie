@@ -3,10 +3,8 @@ import { format, parseISO } from "date-fns";
 import { Card, Rate } from "antd";
 
 import CategoryList from "../category-list";
-import SwapiService from "../../services/swapi-service";
 
 export default class Item extends Component {
-  swapiService = new SwapiService();
   state = {
     value: null,
   };
@@ -26,13 +24,13 @@ export default class Item extends Component {
     this.setState({
       value,
     });
-    localStorage.setItem(id, value);
-    this.swapiService.rateMovie(value, id);
+    this.props.rating(value, id);
   };
 
   render() {
     const { item } = this.props;
-    const rating = Number(localStorage.getItem(item.id));
+    const ratedElement = this.props.ratedList.find((el) => el.id === item.id);
+    const rating = ratedElement === undefined ? 0 : ratedElement.rating;
     const circleColor =
       item.vote_average < 3
         ? "#E90000"
@@ -70,7 +68,7 @@ export default class Item extends Component {
           count={10}
           allowHalf
           allowClear
-          value={rating}
+          value={this.state.value || rating}
           defaultValue={0}
         />
       </Card>

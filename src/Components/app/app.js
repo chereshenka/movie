@@ -15,6 +15,7 @@ export default class App extends Component {
     query: "return",
     tab: "search",
     genresList: [],
+    rateList: [],
   };
   swapiService = new SwapiService();
 
@@ -24,7 +25,9 @@ export default class App extends Component {
       .then((genreListData) =>
         this.setState({ genresList: genreListData.genres }),
       );
-    this.swapiService.getSessionToken();
+    this.swapiService
+      .getRatedMovies()
+      .then((data) => this.setState({ rateList: data.results }));
   }
 
   onQueryChange = (query) => {
@@ -37,8 +40,10 @@ export default class App extends Component {
   tabChange = (tab) => {
     this.setState({
       tab,
+      page: 1,
     });
   };
+
   changePage = (page) => {
     this.setState({
       page,
@@ -49,7 +54,7 @@ export default class App extends Component {
     return (
       <>
         <Online>
-          <SwapiServiceProvider value={this.state}>
+          <SwapiServiceProvider value={this.state} service={this.swapiService}>
             <MenuTabs onTabChange={this.tabChange} />
             <SearchInput
               changeQuery={this.onQueryChange}

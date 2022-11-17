@@ -77,13 +77,17 @@ export default class ListItems extends Component {
       });
   }
 
+  rateFilm = (value, id) => {
+    this.swapiService.rateMovie(value, id);
+  };
+
   changePageNumber = (e) => {
     this.props.changePage(e);
     this.rateList(e);
   };
+
   render() {
     const { data, loading, error, fullData } = this.state;
-
     const spinner = loading && !error ? <Spinner /> : null;
     const errorInformation =
       (!data.length || error) && !loading ? (
@@ -97,7 +101,13 @@ export default class ListItems extends Component {
         <List
           grid={{ gutter: 30, column: 2, lg: 1010 }}
           dataSource={data}
-          renderItem={(item) => <Item item={item} />}
+          renderItem={(item) => (
+            <Item
+              ratedList={this.props.userQuery.rateList}
+              rating={this.rateFilm}
+              item={item}
+            />
+          )}
         />
         <Pagination
           defaultCurrent={1}
