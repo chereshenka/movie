@@ -2,6 +2,7 @@ import { Component } from "react";
 import { Offline, Online } from "react-detect-offline";
 
 import SwapiService from "../../services/swapi-service";
+import Authorization from "../../services/authorization";
 import "antd/dist/antd.min.css";
 import MenuTabs from "../menu";
 import ListItems from "../list-items";
@@ -18,8 +19,12 @@ export default class App extends Component {
     rateList: [],
   };
   swapiService = new SwapiService();
+  auth = new Authorization();
 
   componentDidMount() {
+    if (!localStorage.getItem("guest_id")) {
+      this.auth.getSessionToken();
+    }
     this.swapiService
       .getGenreList()
       .then((genreListData) =>
@@ -38,6 +43,9 @@ export default class App extends Component {
   };
 
   tabChange = (tab) => {
+    this.swapiService
+      .getRatedMovies()
+      .then((data) => this.setState({ rateList: data.results }));
     this.setState({
       tab,
       page: 1,

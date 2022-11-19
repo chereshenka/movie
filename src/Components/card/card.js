@@ -9,6 +9,12 @@ export default class Item extends Component {
     value: null,
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.userRating !== prevProps.userRating) {
+      this.setState({ value: this.props.userRating });
+    }
+  }
+
   cutDescription(text) {
     let preview = text.slice(0, 190);
     if (preview.length === 190) {
@@ -29,8 +35,6 @@ export default class Item extends Component {
 
   render() {
     const { item } = this.props;
-    const ratedElement = this.props.ratedList.find((el) => el.id === item.id);
-    const rating = ratedElement === undefined ? 0 : ratedElement.rating;
     const circleColor =
       item.vote_average < 3
         ? "#E90000"
@@ -39,10 +43,11 @@ export default class Item extends Component {
         : item.vote_average < 7
         ? "#E9D100"
         : "#66E900";
-
     const date = item.release_date
       ? format(parseISO(item.release_date), "MMMM d, y")
       : "no date";
+
+    const rating = this.state.value ? this.state.value : this.props.userRating;
 
     const poster = item.poster_path
       ? `https://image.tmdb.org/t/p/original${item.poster_path}`
@@ -68,7 +73,7 @@ export default class Item extends Component {
           count={10}
           allowHalf
           allowClear
-          value={this.state.value || rating}
+          value={rating}
           defaultValue={0}
         />
       </Card>

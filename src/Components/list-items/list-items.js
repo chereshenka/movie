@@ -36,6 +36,9 @@ export default class ListItems extends Component {
   }
   searchList() {
     const { userQuery } = this.props;
+    this.setState({
+      loading: true,
+    });
     if (!userQuery) {
       return;
     }
@@ -59,6 +62,9 @@ export default class ListItems extends Component {
 
   rateList() {
     const { userQuery } = this.props;
+    this.setState({
+      loading: true,
+    });
     this.swapiService
       .getRatedMovies(userQuery.page)
       .then((res) => {
@@ -82,8 +88,18 @@ export default class ListItems extends Component {
   };
 
   changePageNumber = (e) => {
+    this.setState({
+      loading: true,
+    });
     this.props.changePage(e);
-    this.rateList(e);
+    this.rateList();
+  };
+
+  setFilmRating = (id) => {
+    const { rateList } = this.props.userQuery;
+    const ratedElement = rateList.find((el) => el.id === id);
+    if (!ratedElement) return 0;
+    return ratedElement.rating;
   };
 
   render() {
@@ -103,7 +119,7 @@ export default class ListItems extends Component {
           dataSource={data}
           renderItem={(item) => (
             <Item
-              ratedList={this.props.userQuery.rateList}
+              userRating={this.setFilmRating(item.id)}
               rating={this.rateFilm}
               item={item}
             />
