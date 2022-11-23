@@ -4,6 +4,9 @@ class SwapiService {
   _apiKey = "544f8f911707c9ed5070d258fb62dbb5";
   _apiBase = new URL("https://api.themoviedb.org/");
 
+  auth = new Authorization();
+  guest_key = localStorage.getItem("guest_id");
+
   getResource = async (obj) => {
     const movies = new URL("3/search/movie?", this._apiBase);
     const params = new URLSearchParams({
@@ -25,10 +28,13 @@ class SwapiService {
   }
 
   async rateMovie(value, id) {
+    if (!this.guest_key) {
+      this.guest_key = await this.auth.getSessionToken();
+    }
     const rate = new URL(`3/movie/${id}/rating?`, this._apiBase);
     const params = new URLSearchParams({
       api_key: this._apiKey,
-      guest_session_id: localStorage.getItem("guest_id"),
+      guest_session_id: this.guest_key,
     });
     const res = await fetch(`${rate + params.toString()}`, {
       headers: {
@@ -45,13 +51,12 @@ class SwapiService {
   }
 
   async getRatedMovies(page) {
-    if (!localStorage.getItem("guest_id")) {
-      const auth = new Authorization();
-      await auth.getSessionToken();
+    if (!this.guest_key) {
+      this.guest_key = await this.auth.getSessionToken();
     }
 
     const ratedMovies = new URL(
-      `3/guest_session/${localStorage.getItem("guest_id")}/rated/movies?`,
+      `3/guest_session/${this.guest_key}/rated/movies?`,
       this._apiBase,
     );
     const params = new URLSearchParams({

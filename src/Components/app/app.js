@@ -18,11 +18,11 @@ export default class App extends Component {
     genresList: [],
     rateList: [],
   };
-  swapiService = new SwapiService();
   auth = new Authorization();
+  swapiService = new SwapiService();
 
   componentDidMount() {
-    if (!localStorage.getItem("guest_id")) {
+    if (!this.guest_key) {
       this.auth.getSessionToken();
     }
     this.swapiService
